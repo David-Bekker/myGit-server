@@ -1,6 +1,6 @@
 in myGit:
-    docker compose down -v
-    docker compose up -d
+    docker-compose down -v
+    docker-compose up -d
 in myGit/server:
     .\mvnw.cmd spring-boot:run
 
