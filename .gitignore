@@ -1,0 +1,11 @@
+# VS Code Server settings
+.vscode/*
+
+.env
+target/
+*.class
+.DS_Store
+
+# Ignore local history and workspace data
+.history/
+*.code-search
