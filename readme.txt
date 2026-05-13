@@ -6,4 +6,8 @@ in myGit/server:
 
 clean spring:
     .\mvnw.cmd clean compile
+run spring:
+    .\mvnw.cmd spring-boot:run
     
+check db:
+    docker exec -it mygit-db-1 psql -U david_admin -d github_clone

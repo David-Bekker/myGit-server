@@ -1,14 +1,19 @@
 package com.myGit.server.controller;
 
-import com.myGit.server.model.User;
-import com.myGit.server.repository.UserRepository;
-import com.myGit.server.security.JwtUtils;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import com.myGit.server.model.User;
+import com.myGit.server.repository.UserRepository;
+import com.myGit.server.security.JwtUtils;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -48,5 +53,16 @@ public class AuthController {
                     return ResponseEntity.ok(Map.of("token", token, "username", user.getUsername()));
                 })
                 .orElse(ResponseEntity.status(401).body(Map.of("message", "Invalid credentials")));
+    }
+
+    @PostMapping("/guest")
+    public ResponseEntity<?> guestLogin() {
+    // Generate a token for a generic guest identity
+    String token = jwtUtils.generateToken("guest@mygit.com");
+    return ResponseEntity.ok(Map.of(
+        "token", token,
+        "username", "GuestUser",
+        "isGuest", true
+    ));
     }
 }
