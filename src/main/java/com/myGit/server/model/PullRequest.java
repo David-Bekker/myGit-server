@@ -53,4 +53,6 @@ public class PullRequest {
     public int getComments() { return comments; }
     public void setComments(int comments) { this.comments = comments; }
     public LocalDateTime getCreatedAt() { return createdAt; }
+    public GitRepository getRepository() { return repository; }
+    public void setRepository(GitRepository repository) { this.repository = repository; }
 }

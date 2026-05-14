@@ -62,4 +62,6 @@ public class Issue {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public List<String> getLabels() { return labels; }
     public void setLabels(List<String> labels) { this.labels = labels; }
+    public GitRepository getRepository() { return repository; }
+    public void setRepository(GitRepository repository) { this.repository = repository; }
 }

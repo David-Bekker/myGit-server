@@ -35,7 +35,9 @@ public class RepoController {
 
     @PostMapping
     public GitRepository createRepo(@RequestBody GitRepository repo) {
-        return repoRepository.save(repo);
+        @SuppressWarnings("null")
+        GitRepository saved = repoRepository.save(repo);
+        return saved;
     }
 
     @GetMapping("/owner/{username}")
