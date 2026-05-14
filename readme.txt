@@ -14,3 +14,4 @@ check db:
     SELECT * FROM users;
     SELECT * FROM repositories;
     \dt
+    INSERT INTO repositories (description, language, name, owner, stars) VALUES ('My first repo', 'Text', 'myrepo', 'sagi', 0);

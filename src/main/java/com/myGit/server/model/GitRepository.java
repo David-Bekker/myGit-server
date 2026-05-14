@@ -1,9 +1,14 @@
 package com.myGit.server.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +23,9 @@ public class GitRepository {
     private String owner;
     private int stars;
     private String language;
+
+    @OneToMany(mappedBy = "repository", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RepositoryFile> files = new ArrayList<>();
 
     // 1. No-args constructor (Required by JPA)
     public GitRepository() {
@@ -80,5 +88,12 @@ public class GitRepository {
     }
     public void setLanguage(String language) { 
         this.language = language; 
+    }
+
+    public List<RepositoryFile> getFiles() { 
+        return files; 
+    }
+    public void setFiles(List<RepositoryFile> files) { 
+        this.files = files; 
     }
 }
