@@ -11,3 +11,6 @@ run spring:
     
 check db:
     docker exec -it mygit-db-1 psql -U david_admin -d github_clone
+    SELECT * FROM users;
+    SELECT * FROM repositories;
+    \dt

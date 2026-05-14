@@ -17,17 +17,20 @@ public class GitRepository {
     private String description;
     private String owner;
     private int stars;
+    private String language;
 
     // 1. No-args constructor (Required by JPA)
     public GitRepository() {
+        
     }
 
     // 2. All-args constructor
-    public GitRepository(Long id, String name, String description, String owner, int stars) {
+    public GitRepository(Long id, String name, String description, String owner, String language, int stars) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.owner = owner;
+        this.language = language;
         this.stars = stars;
     }
 
@@ -70,5 +73,12 @@ public class GitRepository {
 
     public void setStars(int stars) {
         this.stars = stars;
+    }
+    
+    public String getLanguage() { 
+        return language; 
+    }
+    public void setLanguage(String language) { 
+        this.language = language; 
     }
 }
