@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "repositories")
@@ -23,6 +24,9 @@ public class GitRepository {
     private String owner;
     private int stars;
     private String language;
+
+    @Transient
+    private String cloneUrl;
 
     @OneToMany(mappedBy = "repository", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RepositoryFile> files = new ArrayList<>();
@@ -95,5 +99,13 @@ public class GitRepository {
     }
     public void setFiles(List<RepositoryFile> files) { 
         this.files = files; 
+    }
+
+    public String getCloneUrl() {
+        return cloneUrl;
+    }
+
+    public void setCloneUrl(String cloneUrl) {
+        this.cloneUrl = cloneUrl;
     }
 }

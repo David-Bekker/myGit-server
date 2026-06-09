@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myGit.server.model.User;
 import com.myGit.server.repository.UserRepository;
 import com.myGit.server.security.JwtUtils;
+import com.myGit.server.security.Role;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000") // Matches your Next.js port
+@CrossOrigin(origins = "http://localhost:3000") // Matches Next.js port
 public class AuthController {
 
     @Autowired
@@ -39,6 +40,9 @@ public class AuthController {
         user.setUsername(signUpRequest.getUsername());
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        
+        user.setRole(signUpRequest.getRole() != null ? signUpRequest.getRole() : Role.ROLE_USER.name());
+        user.setDepartment(signUpRequest.getDepartment() != null ? signUpRequest.getDepartment() : "general");
 
         userRepository.save(user);
         return ResponseEntity.ok(Map.of("message", "User registered successfully!"));
@@ -50,19 +54,26 @@ public class AuthController {
                 .filter(user -> passwordEncoder.matches(loginRequest.get("password"), user.getPassword()))
                 .map(user -> {
                     String token = jwtUtils.generateToken(user.getEmail());
-                    return ResponseEntity.ok(Map.of("token", token, "username", user.getUsername()));
+                    return ResponseEntity.ok(Map.of(
+                        "token", token,
+                        "username", user.getUsername(),
+                        "role", user.getRole(),
+                        "department", user.getDepartment()
+                    ));
                 })
                 .orElse(ResponseEntity.status(401).body(Map.of("message", "Invalid credentials")));
     }
 
     @PostMapping("/guest")
     public ResponseEntity<?> guestLogin() {
-    // Generate a token for a generic guest identity
-    String token = jwtUtils.generateToken("guest@mygit.com");
-    return ResponseEntity.ok(Map.of(
-        "token", token,
-        "username", "GuestUser",
-        "isGuest", true
-    ));
+        String token = jwtUtils.generateToken("guest@mygit.com");
+        
+        return ResponseEntity.ok(Map.of(
+            "token", token,
+            "username", "GuestUser",
+            "role", Role.ROLE_GUEST.name(), 
+            "department", "guest",
+            "isGuest", true
+        ));
     }
 }

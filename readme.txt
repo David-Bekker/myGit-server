@@ -10,8 +10,8 @@ run spring:
     .\mvnw.cmd spring-boot:run
     
 check db:
-    docker exec -it mygit-db-1 psql -U david_admin -d github_clone
+    docker exec -it mygit-db-1 psql -U david_admin -d gitea
     SELECT * FROM users;
     SELECT * FROM repositories;
     \dt
-    INSERT INTO repositories (description, language, name, owner, stars) VALUES ('My first repo', 'Text', 'myrepo', 'sagi', 0);
+    INSERT INTO repositories (description, language, name, owner, stars) VALUES ('My first repo', 'Text', 'myrepo', 'david', 0);
